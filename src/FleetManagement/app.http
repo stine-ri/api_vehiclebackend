@@ -1,0 +1,37 @@
+GET http://localhost:3000/api/FleetManagement
+
+###
+// Getting by ID
+
+### Get a FleetManagement by ID
+GET http://localhost:3000/api/FleetManagement/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/FleetManagement
+Content-Type: application/json
+
+{
+ 
+   "vehicle_id":1,
+   "acquisition_date": "2024-06-12",
+    "depreciation_rate":2,
+    "current_value":5,
+    "maintenance_cost":6,
+    "status":"Travelling"
+}
+
+
+
+###
+PUT http://localhost:3000/api/FleetManagement/3
+Content-Type: application/json
+
+{
+
+    "status":"Parked"
+}
+###
+
+DELETE http://localhost:3000/api/FleetManagement/3

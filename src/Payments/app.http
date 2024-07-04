@@ -1,0 +1,37 @@
+GET http://localhost:3000/api/Payments
+
+###
+// Getting by ID
+
+### Get a Payment by ID
+GET http://localhost:3000/api/Payments/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/Payments
+Content-Type: application/json
+
+{
+  
+ 
+  "amount": 1,
+  "payment_status": "payment",
+  "payment_date": "2024-06-01",
+  "payment_method": "M-pesa",
+  "transaction_id": "1"
+
+}
+
+
+###
+PUT http://localhost:3000/api/Payments/3
+Content-Type: application/json
+
+{
+
+  "payment_method": "paypal"
+}
+###
+
+DELETE http://localhost:3000/api/Payments/3

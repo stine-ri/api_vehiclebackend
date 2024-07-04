@@ -1,0 +1,46 @@
+GET http://localhost:3000/api/Vehicles
+
+###
+// Getting by ID
+
+### Get a Vehicle by ID
+GET http://localhost:3000/api/Vehicles/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/Vehicles
+Content-Type: application/json
+
+{
+ 
+   "vehicleSpec_id": 1,
+   "rental_rate":9,
+   "availability":true
+
+
+}
+
+###
+###
+
+POST http://localhost:3000/api/Vehicles
+Content-Type: application/json
+
+{
+ 
+  "vehicleSpec_id": 2,
+   "rental_rate":8,
+   "availability":true
+}
+###
+PUT http://localhost:3000/api/Vehicles/2
+Content-Type: application/json
+
+{
+
+   "rental_rate":7
+}
+###
+
+DELETE http://localhost:3000/api/Vehicles/2

@@ -1,0 +1,34 @@
+GET http://localhost:3000/api/CustomerSupportTickets
+
+###
+// Getting by ID
+
+### Get a CustomerSupportTickets by ID
+GET http://localhost:3000/api/CustomerSupportTickets/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/CustomerSupportTickets
+Content-Type: application/json
+
+{
+  "user_id": 1, 
+  "subject": "Business",
+  "description": "Urgent",
+  "status": "Completed"
+}
+
+###
+
+###
+PUT http://localhost:3000/api/CustomerSupportTickets/4
+Content-Type: application/json
+
+{
+
+   "status": "not completed"
+}
+###
+
+DELETE http://localhost:3000/api/CustomerSupportTickets/4

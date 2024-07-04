@@ -1,0 +1,42 @@
+import { serve } from '@hono/node-server'
+import { Hono } from 'hono'
+import "dotenv/config"
+import { userRouter } from './users/users.router'
+import { vehicleSpecificationsRouter} from  './vehicleSpecifications/vehicleSpecifications.router'
+import { VehicleRouter } from './Vehicles/Vehicles.router'
+import { LocationRouter } from './Locations/Locations.router'
+import { BookingRouter } from './Bookings/Bookings.router'
+import { PaymentRouter } from './Payments/Payments.router'
+import { CustomerSupportTicketRouter } from './CustomerSupportTickets/CustomerSupportTickets.router'
+import { FleetManagementRouter } from './FleetManagement/FleetManagement.router'
+import { AuthenticationRouter} from './Authentication/Authentication.router'
+import { authRouter} from './auth/auth.router'
+import {cors} from 'hono/cors'
+
+
+const app = new Hono()
+
+//default route//
+app.get('/', (c) => {
+  return c.text('the code is okay')
+})
+app.use(cors({
+  origin: "*"
+}))
+
+app.route("/api",userRouter)
+app.route("/api",vehicleSpecificationsRouter)
+app.route("/api",VehicleRouter)
+app.route("/api",LocationRouter)
+app.route("/api",BookingRouter)
+app.route("/api",PaymentRouter)
+app.route("/api",CustomerSupportTicketRouter)
+app.route("/api",FleetManagementRouter)
+app.route("/api",AuthenticationRouter)
+app.route("/api",authRouter)
+console.log(`Server is running on port ${process.env.PORT}`)
+
+serve({
+  fetch: app.fetch,
+  port:Number(process.env.PORT)
+})

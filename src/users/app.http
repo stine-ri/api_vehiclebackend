@@ -1,0 +1,102 @@
+GET http://localhost:3000/api/users
+
+###
+
+###
+GET http://localhost:3000/api/users
+Authorization:eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJDaHJpc3RpbmUgTnlhbWJ3YXJpIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MjAwOTMyNzN9.rMqzDlzWMrCQj3KFeWMCTQ5scBAdKcGzXqtHFVd_5QQ
+###
+GET http://localhost:3000/api/users/1
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJDaHJpc3RpbmUgTnlhbWJ3YXJpIiwicm9sZSI6InVzZXIiLCJleHAiOjE3MjAwOTMyNzN9.rMqzDlzWMrCQj3KFeWMCTQ5scBAdKcGzXqtHFVd_5QQ
+###
+// Getting by ID
+
+### Get a user by ID
+GET http://localhost:3000/api/users/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+ 
+  "full_name": "Christine",
+  "email": "christine@gmail.com",
+  "contact_phone": "0745689034",
+  "address": "1950",
+  "role": "user"
+}
+
+###
+###
+
+POST http://localhost:3000/api/users
+Content-Type: application/json
+
+{
+ 
+  "full_name": "Stine",
+  "email": "Stine@gmail.com",
+  "contact_phone": "0745678934",
+  "address": "1900",
+  "role": "user"
+}
+###
+PUT http://localhost:3000/api/users/3
+Content-Type: application/json
+
+{
+
+   "address": "1970"
+}
+###
+
+DELETE http://localhost:3000/api/users/5
+
+### 
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+   "userId":1,
+   "username":"Christine Nyambwari",
+   "password":"3457",
+   "role": "user"
+
+}
+### 
+POST http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+   "userId":2,
+   "username":"Kim Soohyun",
+   "password":"4657",
+   "role": "admin"
+
+}
+###
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username":"Christine Nyambwari",
+    "password":"3457"
+   
+}
+
+
+
+###
+POST http://localhost:3000/api/login
+Content-Type: application/json
+
+{
+    "username":"Kim Soohyun",
+    "password":"4567"
+   
+}
+
+

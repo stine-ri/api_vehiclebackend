@@ -1,0 +1,39 @@
+GET http://localhost:3000/api/vehicleSpecifications
+
+###
+// Getting by ID
+
+### Get a user by ID
+GET http://localhost:3000/api/vehicleSpecifications/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/vehicleSpecifications
+Content-Type: application/json
+
+{
+  "manufacturer": "Toyota",
+  "model": "Subaru",
+  "year": 2017,
+  "fuelType": "petrol",
+  "engineCapacity": "2000cc",
+  "transmission": "150",
+  "seatingCapacity": 5,
+  "color": "white",
+  "features": "powerful"
+}
+
+
+###
+
+PUT http://localhost:3000/api/vehicleSpecifications/1
+Content-Type: application/json
+
+{
+ 
+  "features":"powerful totally"
+  }
+###
+
+DELETE http://localhost:3000/api/vehicleSpecifications/4

@@ -1,0 +1,46 @@
+GET http://localhost:3000/api/Locations
+
+###
+// Getting by ID
+
+### Get a Location by ID
+GET http://localhost:3000/api/Locations/1
+Content-Type: application/json
+
+###
+
+POST http://localhost:3000/api/Locations
+Content-Type: application/json
+
+{
+ 
+  "name": "Riyan",
+  "address": "3456",
+  "contact_phone": "0789654321"
+
+}
+
+###
+###
+
+POST http://localhost:3000/api/Locations
+Content-Type: application/json
+
+{
+ 
+  "name": "Jiwon",
+  "address": "3478",
+  "contact_phone": "0700654321"
+ 
+}
+###
+PUT http://localhost:3000/api/Locations/3
+Content-Type: application/json
+
+{
+
+   "address": "1970"
+}
+###
+
+DELETE http://localhost:3000/api/Locations/3
