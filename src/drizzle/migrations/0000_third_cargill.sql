@@ -1,9 +1,18 @@
+DO $$ BEGIN
+ CREATE TYPE "public"."role" AS ENUM('admin', 'user');
+EXCEPTION
+ WHEN duplicate_object THEN null;
+END $$;
+--> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "authentication" (
 	"auth_id" serial PRIMARY KEY NOT NULL,
 	"user_id" integer NOT NULL,
 	"password" varchar,
+	"email" varchar(255),
+	"role" "role" DEFAULT 'user',
 	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now()
+	"updated_at" timestamp DEFAULT now(),
+	CONSTRAINT "authentication_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "bookings" (
@@ -55,23 +64,11 @@ CREATE TABLE IF NOT EXISTS "payments" (
 	"booking_id" integer,
 	"amount" numeric(10, 2),
 	"payment_status" varchar(50) DEFAULT 'Pending',
-	"payment_date" timestamp DEFAULT now(),
+	"payment_date" date DEFAULT now(),
 	"payment_method" varchar(50),
 	"transaction_id" varchar(255),
 	"created_at" timestamp DEFAULT now(),
 	"updated_at" timestamp DEFAULT now()
-);
---> statement-breakpoint
-CREATE TABLE IF NOT EXISTS "users" (
-	"user_id" serial PRIMARY KEY NOT NULL,
-	"full_name" text,
-	"email" varchar(255),
-	"contact_phone" varchar(20),
-	"address" text,
-	"role" varchar(10) DEFAULT 'user',
-	"created_at" timestamp DEFAULT now(),
-	"updated_at" timestamp DEFAULT now(),
-	CONSTRAINT "users_email_unique" UNIQUE("email")
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "vehicle_specifications" (
@@ -96,8 +93,20 @@ CREATE TABLE IF NOT EXISTS "vehicles" (
 	"updated_at" timestamp DEFAULT now()
 );
 --> statement-breakpoint
+CREATE TABLE IF NOT EXISTS "users" (
+	"user_id" serial PRIMARY KEY NOT NULL,
+	"username" text,
+	"email" varchar(255),
+	"contact_phone" varchar(20),
+	"address" text,
+	"role" varchar(10) DEFAULT 'user',
+	"created_at" timestamp DEFAULT now(),
+	"updated_at" timestamp DEFAULT now(),
+	CONSTRAINT "users_email_unique" UNIQUE("email")
+);
+--> statement-breakpoint
 DO $$ BEGIN
- ALTER TABLE "authentication" ADD CONSTRAINT "authentication_user_id_users_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("user_id") ON DELETE no action ON UPDATE no action;
+ ALTER TABLE "authentication" ADD CONSTRAINT "authentication_user_id_users_user_id_fk" FOREIGN KEY ("user_id") REFERENCES "public"."users"("user_id") ON DELETE cascade ON UPDATE no action;
 EXCEPTION
  WHEN duplicate_object THEN null;
 END $$;
