@@ -21,9 +21,9 @@ app.get('/', (c) => {
   return c.text('the code is okay')
 })
 //middleware
-app.use(cors({
-  origin: "https://car-rental-frontend-liard.vercel.app/"
-}))
+
+app.use('*', cors())
+
 //routehandlers
 app.route("/api",userRouter)
 app.route("/api",vehicleSpecificationsRouter)
