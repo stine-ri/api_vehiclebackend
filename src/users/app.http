@@ -29,18 +29,6 @@ Content-Type: application/json
   "role": "user"
 }
 
-###
-{
- 
- 
-  "full_name": "Christine Rian ",
-  "email": "riyan99@gmail.com",
-  "contact_phone": "0799087188",
-  "address": "90 kenya",
-  "role": "admin",
-  "password": "2003"
-}
-###
 
 POST http://localhost:3000/api/users
 Content-Type: application/json

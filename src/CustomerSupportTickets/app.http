@@ -13,7 +13,7 @@ POST http://localhost:3000/api/CustomerSupportTickets
 Content-Type: application/json
 
 {
-  "user_id": 1, 
+  "user_id": 4, 
   "subject": "Business",
   "description": "Urgent",
   "status": "Completed"

@@ -22,7 +22,7 @@ app.get('/', (c) => {
 })
 //middleware
 app.use(cors({
-  origin: "http://localhost:5173"
+  origin: "/*"
 }))
 //routehandlers
 app.route("/api",userRouter)
