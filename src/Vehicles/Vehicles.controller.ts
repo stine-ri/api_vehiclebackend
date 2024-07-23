@@ -22,12 +22,18 @@ export const getVehicle = async (c: Context) => {
     const id = parseInt(c.req.param("id"));
     if (isNaN(id)) return c.text("Invalid ID", 400);
 
-    const Vehicle = await getVehicleservice(id);
-    if (Vehicle == undefined) {
-        return c.text("Vehicle not found", 404);
+    try {
+        const vehicle = await getVehicleservice(id);
+        console.log('Fetched Vehicle:', vehicle); // Log the fetched vehicle for debugging
+        if (!vehicle) {
+            return c.json({ success: false, message: "Vehicle not found" }, 404);
+        }
+        return c.json({ success: true, data: vehicle }, 200); // Wrap vehicle in a success response
+    } catch (error) {
+        console.error('Error fetching vehicle:', error);
+        return c.json({ success: false, message: 'Server error' }, 500);
     }
-    return c.json(Vehicle, 200);
-}
+};
 export const createVehicle = async (c: Context) => {
     try {
         const Vehicle = await c.req.json();

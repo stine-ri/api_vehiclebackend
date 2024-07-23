@@ -1,99 +1,65 @@
-
+import "dotenv/config";
 import { Context } from "hono";
-import { AuthenticationService, getAuthenticationervice, createAuthenticationService, updateAuthenticationService, deleteAuthenticationervice,} from "./Authentication.service";
-import*as bcrypt from "bcrypt";
-export const listAuthentication = async (c: Context) => {
+import { createAuthUserService, userLoginService } from "./Authentication.service";
+import * as bycrpt from "bcrypt";
+import { sign } from "hono/jwt";
+import { users } from "../drizzle/schema";
+ 
+export const registerUser = async (c: Context) => {
     try {
-        //limit the number of Authentication to be returned
-
-        const limit = Number(c.req.query('limit'))
-
-        const data = await AuthenticationService(limit);
-        if (data == null || data.length == 0) {
-            return c.text("Authentication not found", 404)
+ 
+        console.log(await c.req.json())
+        const user = await c.req.json();
+        const pass = user.password;
+        const hashedPassword = await bycrpt.hash(pass, 10);
+        user.password = hashedPassword;
+        const createdUser = await createAuthUserService(user);
+        if (!createdUser) return c.text("User exit do you want to login?", 404);
+        return c.json({ msg: createdUser }, 201);
+ 
+    } catch (error: any) {
+        return c.json({ error: error?.message }, 400)
+    }
+ 
+}
+ 
+export const loginUser = async (c: Context) => {
+ 
+    try {
+        console.log("hey")
+        const user = await c.req.json();
+        //check user exist
+        // console.log(user)
+        const userExist = await userLoginService(user);
+        // console.log(userExist)
+        if (userExist === null) return c.json({ error: "User not found" }, 404);  // not found        
+        const userMatch = await bycrpt.compare(user.password, userExist?.password as string);
+        // console.log(userMatch)
+        if (!userMatch) {
+            return c.json({ error: "invalid login details!!!" }, 401);  // unauthorized
+        } else {
+            // create a payload
+            const payload = {
+                sub: userExist?.user,
+ 
+                role: userExist?.role,
+                exp: Math.floor(Date.now() / 1000) + (60 * 180)
+                 // 3 hour  => SESSION EXPIRATION
+            }
+            // console.log(payload)
+            console.log(process.env.JWT_SECRET)
+            let secret = process.env.JWT_SECRET as string;  // secret key
+            // console.log(secret); //
+            const token = await sign(payload, secret);   // create a JWT token
+            let user = userExist?.user;
+            let role = userExist?.role;
+            return c.json({ token, user: { role,user } }, 200);  // return token and user details
         }
-        return c.json(data, 200);
     } catch (error: any) {
         return c.json({ error: error?.message }, 400)
     }
-}
-
-export const getAuthentication = async (c: Context) => {
-    const id = parseInt(c.req.param("id"));
-    if (isNaN(id)) return c.text("Invalid ID", 400);
-
-    const Authentication = await getAuthenticationervice(id);
-    if (Authentication == undefined) {
-        return c.text("Authentication not found", 404);
-    }
-    return c.json(Authentication, 200);
-}
-export const createAuthentication = async (c: Context) => {
-    try {
-        const Authentication = await c.req.json();
-        // const password=Authentication.password;
-        // const hashedPassword=await bcrypt.hash(password,10);
-        // Authentication.password=hashedPassword;
-        const createdAuthentication = await createAuthenticationService(Authentication);
-
-
-        if (!createdAuthentication) return c.text("Authentication not created", 404);
-        return c.json({ msg: createdAuthentication }, 201);
-
-    } catch (error: any) {
-        return c.json({ error: error?.message }, 400)
-    }
-}
-
-export const updateAuthentication = async (c: Context) => {
-    const id = parseInt(c.req.param("id"));
-    if (isNaN(id)) return c.text("Invalid ID", 400);
-
-    const Authentication = await c.req.json();
-    try {
-        // search for the Authentication
-        const searchedAuthentication= await getAuthenticationervice(id);
-        if (searchedAuthentication == undefined) return c.text("Authentication not found", 404);
-        // get the data and update it
-        const res = await updateAuthenticationService(id, Authentication);
-        // return a success message
-        if (!res) return c.text("Authentication not updated", 404);
-
-        return c.json({ msg: res }, 201);
-    } catch (error: any) {
-        return c.json({ error: error?.message }, 400)
-    }
-}
-
-export const deleteAuthentication = async (c: Context) => {
-    const id = Number(c.req.param("id"));
-    if (isNaN(id)) return c.text("Invalid ID", 400);
-
-    try {
-        //search for the Authentication
-        const Authentication = await getAuthenticationervice(id);
-        if (Authentication== undefined) return c.text("Authentication not found", 404);
-        //deleting the Authentication
-        const res = await deleteAuthenticationervice(id);
-        if (!res) return c.text("Authentication not deleted", 404);
-
-        return c.json({ msg: res }, 201);
-    } catch (error: any) {
-        return c.json({ error: error?.message }, 400)
-    }
+ 
 }
  
  
-// //get all Authentication by author
-// export const getAllAuthenticationByAuthor = async (c: Context) => {
-//     const author = c.req.param("author");
-//     try {
-//         if (!author) return c.text("Invalid author", 400);
-//         //search for Authentication
-//         const Authentication = await getAuthenticationByAuthor(author);
-//         if (Authentication === null) return c.text("Authentication not found", 404);
-//         return c.json(Authentication, 200);
-//     } catch (error: any) {
-//         return c.text(error?.message, 400);
-//     }
-// }
+ 

@@ -18,12 +18,12 @@ Content-Type: application/json
     "location_id":1,
     "booking_date": "2024-06-24",
     "return_date": "2024-06-24",
-    "total_amount": 20000,
+    "total_amount": "20000",
     "booking_status": "booked"
 }
 
 ###
-PUT http://localhost:3000/api/Bookings/3
+PUT http://localhost:3000/api/Bookings/4
 Content-Type: application/json
 
 {

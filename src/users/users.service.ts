@@ -33,9 +33,3 @@ export const deleteuserservice = async (id: number) => {
     return "user deleted successfully";
 }
 
-// GET users BY AUTHOR
-//  export const getusersByAuthor = async (author: string): Promise<TIUsers[] | null> => {
-//     return await db.query.users.findMany({
-//         where: eq(users.author, author)
-//     })
-// }

@@ -1,0 +1,13 @@
+###
+
+POST http://localhost:3000/api/create-payment-intent
+Content-Type: application/json
+
+{
+ 
+  "amount":"1000.00",
+  "currency":"usd",
+   "booking_id":"1",
+   "payment_method":"credit_card"
+ 
+}

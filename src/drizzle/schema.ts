@@ -1,9 +1,10 @@
 import { pgTable, serial, text, varchar, integer, primaryKey,decimal,boolean,timestamp,date,pgEnum} from "drizzle-orm/pg-core";
 import { relations } from "drizzle-orm";
+
 // Users Table
 export const users = pgTable("users", {
     id: serial("user_id").primaryKey(),
-    full_name: text("full_name"),
+    full_name: text("username"),
     email: varchar("email", { length: 255 }).unique(),
     contact_phone: varchar("contact_phone", { length: 20 }),
     address: text("address"),
@@ -154,10 +155,13 @@ export const fleetManagementRelations = relations(FleetManagement, ({ one }) => 
 }));
  
 // Authentication Table
+export const roleEnum = pgEnum("role", ["admin", "user"])
 export const Authentication = pgTable("authentication", {
     auth_id: serial("auth_id").primaryKey(),
-    user_id: integer("user_id").notNull().references(() => users.id),
+    user_id: integer("user_id").notNull().references(() => users.id,{onDelete:"cascade"}),
     password: varchar("password"),
+    email: varchar("email", { length: 255 }).unique(),
+    role: roleEnum("role").default("user"),
     created_at: timestamp("created_at").defaultNow(),
     updated_at: timestamp("updated_at").defaultNow(),
 });
@@ -171,22 +175,7 @@ export const authenticationRelations = relations(Authentication, ({ one }) => ({
  
 
 
-export const roleEnum = pgEnum("role", ["admin", "user"])
 
-export const AuthOnUsersTable = pgTable("auth_on_users", {
-    id: serial("id").primaryKey(),
-    userId: integer("user_id").notNull().references(() => users.id, { onDelete: "cascade" }),
-    password: varchar("password", { length: 90 }),
-    username: varchar("username", { length: 90 }),
-    role: roleEnum("role").default("user")
-});
-
-export const AuthOnUsersRelations = relations(AuthOnUsersTable, ({ one }) => ({
-    users: one(users, {
-        fields: [AuthOnUsersTable.userId],
-        references: [users.id]
-    })
-}));
 
  
 export type TIUsers = typeof users.$inferInsert;
@@ -217,5 +206,3 @@ export type TSFleetManagement = typeof FleetManagement.$inferSelect;
 export type TIAuthentication = typeof Authentication.$inferInsert;
 export type TSAuthentication = typeof Authentication.$inferSelect;
 
-export type TIAuthOnUser = typeof AuthOnUsersTable.$inferInsert;
-export type TSAuthOnUser = typeof AuthOnUsersTable.$inferSelect;

@@ -29,7 +29,7 @@ Content-Type: application/json
 
 {
  
-  "vehicleSpec_id": 2,
+  "vehicleSpec_id": 3,
    "rental_rate":8,
    "availability":true
 }

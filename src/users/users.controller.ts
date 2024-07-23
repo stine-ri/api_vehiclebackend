@@ -84,16 +84,3 @@ export const deleteUser = async (c: Context) => {
 }
  
  
-// //get all users by author
-// export const getAllusersByAuthor = async (c: Context) => {
-//     const author = c.req.param("author");
-//     try {
-//         if (!author) return c.text("Invalid author", 400);
-//         //search for user
-//         const users = await getusersByAuthor(author);
-//         if (users === null) return c.text("users not found", 404);
-//         return c.json(users, 200);
-//     } catch (error: any) {
-//         return c.text(error?.message, 400);
-//     }
-// }

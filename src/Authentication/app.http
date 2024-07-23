@@ -29,3 +29,84 @@ Content-Type: application/json
 ###
 
 DELETE http://localhost:3000/api/Authentication/3
+###
+ POST   http://localhost:3000/api/register
+Content-Type: application/json
+ 
+{
+ 
+ 
+  "full_name": "wairimu elijah Kimani ",
+  "email": "elijahkiimZ@gmail.com",
+  "contact_phone": "0791337188",
+  "address": "123 kenya",
+  "role": "admin",
+  "password": "123457789"
+}
+ 
+###
+ ###
+ POST   http://localhost:3000/api/register
+Content-Type: application/json
+ 
+{
+ 
+ 
+  "full_name": "Christine Rian ",
+  "email": "riyan99@gmail.com",
+  "contact_phone": "0799087188",
+  "address": "90 kenya",
+  "role": "admin",
+  "password": "2003"
+}
+###
+ POST   http://localhost:3000/api/register
+Content-Type: application/json
+
+{
+  
+  "full_name": "stine Rian",
+  "email": "riyan989@gmail.com",
+  "contact_phone": "0799087788",
+  "address": "90 ke",
+  "role": "user",
+  "password": "2010"
+
+}
+###
+PUT http://localhost:3000/api/Authentication/3
+Content-Type: application/json
+
+{
+
+   "password":"123896"
+}
+
+###
+POST    http://localhost:3000/api/login
+Content-Type: application/json
+ 
+  {  
+    "email": "elijahkiiimzZ@gmail.com",
+    "password": "123456789"
+  }
+ 
+###
+POST    http://localhost:3000/api/login
+Content-Type: application/json
+ 
+  {  
+    "email": "riyan09@gmail.com",
+    "password": "2003"
+  }
+  ###
+###
+POST    http://localhost:3000/api/login
+Content-Type: application/json
+ 
+  {  
+    "email": "riyan989@gmail.com",
+    "password": "2010"
+  }
+
+

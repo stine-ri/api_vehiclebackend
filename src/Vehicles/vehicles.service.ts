@@ -13,10 +13,17 @@ export const VehiclesService = async (limit?: number): Promise<TSVehicles[] | nu
 }
 
 export const getVehicleservice = async (id: number): Promise<TIVehicles | undefined> => {
-    return await db.query.Vehicles.findFirst({
-        where: eq(Vehicles.id, id)
-    })
-}
+    try {
+        const vehicle = await db.query.Vehicles.findFirst({
+            where: eq(Vehicles.id, id)
+        });
+        console.log('Fetched Vehicle:', vehicle); // Log the fetched vehicle for debugging
+        return vehicle;
+    } catch (error) {
+        console.error('Error fetching vehicle from service:', error);
+        throw error;
+    }
+};
 
 export const createVehicleservice = async (Vehicle: TIVehicles) => {
     await db.insert(Vehicles).values(Vehicle)

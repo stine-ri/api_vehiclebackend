@@ -8,7 +8,7 @@ export const BookingsSchema = z.object({
     location_id:z.number(),
     booking_date: z.string(),
     return_date: z.string(),
-    total_amount: z.number(),
+    total_amount: z.string(),
     booking_status: z.string()
 
 })
